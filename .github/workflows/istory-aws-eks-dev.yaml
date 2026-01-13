@@ -162,10 +162,11 @@ jobs:
             (.spec.template.spec.containers[] | select(.name=="istory")).image
             = "dangtong76/istory:${{ github.sha }}"
           ' overlay/aws-dev/patch-deploy.yml
-          
+
       - name: 서비스 리포지토리 최종 업데이트
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git commit -am "Update image tag to ${{ env.DOCKER_TAG }}"
+          git add .
+          git commit -am "Update image tag to ${{ github.sha }}"
           git push origin ${{ github.ref_name }}
