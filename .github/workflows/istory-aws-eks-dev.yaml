@@ -110,10 +110,12 @@ jobs:
           mkdir -p xinfra/docker/build/libs/
           cp build/libs/*.jar xinfra/docker/
           ls xinfra/docker/
+
       - name: 컨테이너 이미지 빌드
         run: |
-          docker build ./xinfra/docker -t ${{ secrets.DOCKER_USERNAME }}/istory:${{ env.DOCKER_TAG }} -f ./xinfra/docker/Dockerfile
+          docker build -f ./xinfra/docker/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/istory:${{ env.DOCKER_TAG }} ./xinfra/docker
           docker tag ${{ secrets.DOCKER_USERNAME }}/istory:${{ env.DOCKER_TAG }} ${{ secrets.DOCKER_USERNAME }}/istory:latest
+
 
       - name: Docker Hub 로그인
         uses: docker/login-action@v3.0.0
